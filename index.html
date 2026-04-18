@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Knitting Department</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #001138;
+      --white: #F8F2E0;
+      --cream: #edeade;
+      --yarn: #EF4367;
+      --yarn-dark: #c82d50;
+      --yarn-light: #f9b3c0;
+      --ink: #001138;
+      --muted: #327F88;
+      --border: #c8c4b8;
+      --yellow: #FEC018;
+      --yellow-dark: #e0a800;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: var(--white);
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--yellow); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4rem 6rem 6rem;
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      border: 60px solid rgba(201,74,30,0.12);
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--yarn);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--yarn);
+    }
+
+    .hero-tagline {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #9a9590;
+      max-width: 340px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    .hero-tagline strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      background: var(--yarn);
+      color: var(--white);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .hero-cta:hover { background: var(--yellow); color: var(--ink); transform: translateY(-1px); }
+
+    .hero-right {
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem;
+      position: relative;
+    }
+
+    .hero-art {
+      width: 100%;
+      max-width: 380px;
+    }
+
+    /* TICKER */
+    .ticker {
+      background: var(--yellow);
+      color: var(--ink);
+      padding: 0.7rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-inner {
+      display: inline-flex;
+      gap: 3rem;
+      animation: ticker 20s linear infinite;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* SECTIONS */
+    section { padding: 6rem 6rem; }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--yarn);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+      font-weight: 300;
+    }
+
+    /* PATTERNS */
+    #patterns { background: var(--white); }
+
+    .patterns-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .pattern-card {
+      background: var(--cream);
+      aspect-ratio: 4/5;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+    }
+
+    .pattern-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(14,14,14,0.7) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .pattern-card:hover::before { opacity: 1; }
+
+    .pattern-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pattern-info {
+      position: relative;
+      z-index: 1;
+      transform: translateY(8px);
+      opacity: 0;
+      transition: all 0.3s;
+    }
+
+    .pattern-card:hover .pattern-info {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .pattern-tag {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--yarn-light);
+      margin-bottom: 0.4rem;
+    }
+
+    .pattern-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .pattern-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--yarn-light);
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    /* YOUTUBE */
+    #videos { background: var(--black); }
+    #videos .section-title { color: var(--white); }
+    #videos .section-subtitle { color: #7a7570; }
+    #videos .section-label { color: var(--yarn); }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .video-card {
+      background: #1a1814;
+      border: 1px solid #2a2724;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .video-card:hover {
+      border-color: var(--yellow);
+      transform: translateY(-3px);
+    }
+
+    .video-thumb {
+      aspect-ratio: 16/9;
+      background: #2a2724;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-btn {
+      width: 48px; height: 48px;
+      background: var(--yarn);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-btn svg { margin-left: 3px; }
+
+    .video-info { padding: 1rem 1.2rem; }
+
+    .video-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--yarn);
+      margin-bottom: 0.4rem;
+    }
+
+    .video-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.4;
+    }
+
+    /* INSTAGRAM */
+    #instagram { background: var(--cream); }
+
+    .reels-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    .reel-card {
+      aspect-ratio: 9/16;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .reel-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(201,74,30,0.15);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .reel-card:hover::after { opacity: 1; }
+
+    .reel-icon {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ig-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 2rem;
+      padding: 0.85rem 2rem;
+      border: 1.5px solid var(--ink);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .ig-cta:hover {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    /* ABOUT */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding: 0;
+    }
+
+    .about-visual {
+      background: var(--yarn);
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-visual::before {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      border: 80px solid rgba(255,255,255,0.08);
+    }
+
+    .about-initial {
+      font-family: 'Playfair Display', serif;
+      font-size: 14rem;
+      font-weight: 900;
+      font-style: italic;
+      color: rgba(255,255,255,0.15);
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+      user-select: none;
+    }
+
+    .about-text {
+      padding: 6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--white);
+    }
+
+    .about-body {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #4a4742;
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .about-body p + p { margin-top: 1rem; }
+
+    /* CONTACT */
+    #contact { background: var(--black); padding: 5rem 6rem; }
+    #contact .section-title { color: var(--white); }
+    #contact .section-label { color: var(--yarn); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      background: #1a1814;
+      border: 1px solid #2a2724;
+      color: var(--white);
+      padding: 0.9rem 1.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: #4a4742; }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: var(--yellow); }
+
+    .contact-form textarea { height: 130px; }
+
+    .contact-submit {
+      padding: 0.9rem 2rem;
+      background: var(--yarn);
+      color: var(--white);
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+
+    .contact-submit:hover { background: var(--yellow); color: var(--ink); }
+
+    .contact-info { color: #7a7570; }
+
+    .contact-info p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      color: #9a9590;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-link:hover { color: var(--yellow); }
+
+    .contact-link-dot {
+      width: 6px; height: 6px;
+      background: var(--yarn);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      border-top: 1px solid #1a1814;
+      padding: 2rem 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: #4a4742;
+      text-transform: uppercase;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 5rem 2rem 4rem; }
+      section { padding: 4rem 2rem; }
+      .patterns-grid { grid-template-columns: 1fr 1fr; }
+      .videos-grid { grid-template-columns: 1fr; }
+      .reels-grid { grid-template-columns: repeat(2, 1fr); }
+      #about { grid-template-columns: 1fr; }
+      .about-visual { min-height: 260px; }
+      .about-text { padding: 3rem 2rem; }
+      #contact { padding: 4rem 2rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { padding: 1.5rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Knitting Department</a>
+    <ul class="nav-links">
+      <li><a href="#patterns">Patterns</a></li>
+      <li><a href="#videos">Videos</a></li>
+      <li><a href="#instagram">Instagram</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Knitting Department</p>
+      <h1 class="hero-title">Make<br>something<br><em>real.</em></h1>
+      <p class="hero-tagline"><strong>Because making stuff feels damn good.</strong><br>Patterns, tutorials, and the occasional yarn obsession.</p>
+      <a href="#patterns" class="hero-cta">
+        Browse patterns
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="hero-right">
+      <svg class="hero-art" viewBox="0 0 380 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Decorative knitting-inspired illustration -->
+        <circle cx="190" cy="240" r="160" fill="#d4cfc5"/>
+        <circle cx="190" cy="240" r="130" fill="#c8c2b5"/>
+        <!-- Yarn ball -->
+        <circle cx="190" cy="250" r="90" fill="#c94a1e"/>
+        <ellipse cx="190" cy="250" rx="90" ry="90" stroke="#9e3616" stroke-width="0" fill="none"/>
+        <!-- Yarn lines -->
+        <path d="M110 210 Q190 160 270 210" stroke="#9e3616" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M105 235 Q190 175 275 235" stroke="#9e3616" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M108 260 Q190 195 272 260" stroke="#9e3616" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M112 285 Q190 215 268 285" stroke="#9e3616" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M150 185 Q190 270 230 315" stroke="#9e3616" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M175 175 Q215 265 210 320" stroke="#9e3616" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M200 178 Q240 260 225 318" stroke="#9e3616" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Needles -->
+        <rect x="220" y="140" width="8" height="150" rx="4" fill="#1a1814" transform="rotate(15 224 215)"/>
+        <rect x="155" y="145" width="8" height="150" rx="4" fill="#1a1814" transform="rotate(-12 159 220)"/>
+        <circle cx="253" cy="147" r="6" fill="#c94a1e"/>
+        <circle cx="145" cy="153" r="6" fill="#c94a1e"/>
+        <!-- Label -->
+        <text x="190" y="420" text-anchor="middle" font-family="'DM Mono', monospace" font-size="11" letter-spacing="3" fill="#7a7570" text-transform="uppercase">KNITTING DEPT.</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span>Patterns</span><span>·</span>
+      <span>Tutorials</span><span>·</span>
+      <span>Yarn Love</span><span>·</span>
+      <span>Make Something</span><span>·</span>
+      <span>Free Patterns</span><span>·</span>
+      <span>For Beginners</span><span>·</span>
+      <span>For Experts</span><span>·</span>
+      <span>Patterns</span><span>·</span>
+      <span>Tutorials</span><span>·</span>
+      <span>Yarn Love</span><span>·</span>
+      <span>Make Something</span><span>·</span>
+      <span>Free Patterns</span><span>·</span>
+      <span>For Beginners</span><span>·</span>
+      <span>For Experts</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- PATTERNS -->
+  <section id="patterns">
+    <p class="section-label">Patterns</p>
+    <h2 class="section-title">Latest from the desk</h2>
+    <p class="section-subtitle">Step-by-step patterns for all skill levels. Free to download, designed to actually work.</p>
+
+    <div class="patterns-grid">
+      <!-- Pattern 1 -->
+      <div class="pattern-card" style="background: #2a2724;">
+        <div class="pattern-placeholder">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <rect x="20" y="20" width="80" height="80" rx="40" stroke="#4a4742" stroke-width="3" fill="none"/>
+            <path d="M40 60 Q60 30 80 60 Q60 90 40 60Z" fill="#c94a1e" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="pattern-info">
+          <span class="pattern-tag">Beginner · Free</span>
+          <p class="pattern-name">The Everyday<br>Ribbed Beanie</p>
+          <a href="#" class="pattern-read">Read more →</a>
+        </div>
+      </div>
+      <!-- Pattern 2 -->
+      <div class="pattern-card" style="background: #c8c2b5;">
+        <div class="pattern-placeholder">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <path d="M30 90 L60 20 L90 90 Z" fill="none" stroke="#7a7570" stroke-width="3"/>
+            <path d="M45 60 Q60 40 75 60" stroke="#c94a1e" stroke-width="3" fill="none"/>
+            <path d="M38 75 Q60 50 82 75" stroke="#c94a1e" stroke-width="2.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="pattern-info">
+          <span class="pattern-tag">Intermediate</span>
+          <p class="pattern-name">Chunky Cable<br>Sweater</p>
+          <a href="#" class="pattern-read">Read more →</a>
+        </div>
+      </div>
+      <!-- Pattern 3 -->
+      <div class="pattern-card" style="background: #1a1814;">
+        <div class="pattern-placeholder">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <rect x="25" y="35" width="70" height="50" rx="4" stroke="#4a4742" stroke-width="2.5" fill="none"/>
+            <path d="M25 50 L95 50" stroke="#c94a1e" stroke-width="2"/>
+            <path d="M25 65 L95 65" stroke="#c94a1e" stroke-width="2"/>
+            <path d="M55 35 L55 85" stroke="#4a4742" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="pattern-info">
+          <span class="pattern-tag">All levels · Free</span>
+          <p class="pattern-name">Striped Market<br>Tote Bag</p>
+          <a href="#" class="pattern-read">Read more →</a>
+        </div>
+      </div>
+      <!-- Pattern 4 -->
+      <div class="pattern-card" style="background: #ede9e0;">
+        <div class="pattern-placeholder">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <circle cx="60" cy="60" r="35" stroke="#b4afa8" stroke-width="2.5" fill="none"/>
+            <path d="M35 60 Q50 40 60 60 Q70 80 85 60" stroke="#c94a1e" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="pattern-info">
+          <span class="pattern-tag">Advanced</span>
+          <p class="pattern-name">Lace Shawl<br>No. 3</p>
+          <a href="#" class="pattern-read">Read more →</a>
+        </div>
+      </div>
+      <!-- Pattern 5 -->
+      <div class="pattern-card" style="background: #c94a1e;">
+        <div class="pattern-placeholder">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <path d="M40 30 L40 90 M80 30 L80 90" stroke="rgba(255,255,255,0.3)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M40 45 Q60 35 80 45" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" fill="none"/>
+            <path d="M40 60 Q60 50 80 60" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" fill="none"/>
+            <path d="M40 75 Q60 65 80 75" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="pattern-info">
+          <span class="pattern-tag">Beginner · Free</span>
+          <p class="pattern-name">Simple Garter<br>Scarf</p>
+          <a href="#" class="pattern-read">Read more →</a>
+        </div>
+      </div>
+      <!-- Pattern 6 -->
+      <div class="pattern-card" style="background: #2a3520;">
+        <div class="pattern-placeholder">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <path d="M30 80 Q60 25 90 80" fill="#3a4a2d"/>
+            <path d="M40 80 Q60 35 80 80" fill="#4a5e3a"/>
+            <circle cx="60" cy="85" r="8" fill="#c94a1e"/>
+          </svg>
+        </div>
+        <div class="pattern-info">
+          <span class="pattern-tag">Intermediate</span>
+          <p class="pattern-name">Forest Mittens<br>with thumb gusset</p>
+          <a href="#" class="pattern-read">Read more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- YOUTUBE -->
+  <section id="videos">
+    <p class="section-label">YouTube</p>
+    <h2 class="section-title">Watch & learn</h2>
+    <p class="section-subtitle">Video tutorials to go alongside the patterns — because some things you just need to see.</p>
+
+    <div class="videos-grid">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M5 3l9 5-9 5V3z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="video-info">
+          <p class="video-label">Tutorial</p>
+          <p class="video-title">How to cast on — 3 methods every knitter should know</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M5 3l9 5-9 5V3z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="video-info">
+          <p class="video-label">Pattern walkthrough</p>
+          <p class="video-title">Knitting the Everyday Ribbed Beanie — full tutorial</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M5 3l9 5-9 5V3z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="video-info">
+          <p class="video-label">Yarn haul</p>
+          <p class="video-title">What I bought this month — and what I'm making with it</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2.5rem;">
+      <a href="https://youtube.com" target="_blank" class="ig-cta" style="border-color: #2a2724; color: #9a9590;">
+        Watch all on YouTube
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM -->
+  <section id="instagram">
+    <p class="section-label">Instagram</p>
+    <h2 class="section-title">Reels & work in progress</h2>
+    <p class="section-subtitle">Behind the scenes, quick tips, and things I'm currently making.</p>
+
+    <div class="reels-grid">
+      <div class="reel-card" style="background: #d4cfc5;">
+        <div class="reel-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4 2l11 7-11 7V2z" fill="#c94a1e"/>
+          </svg>
+        </div>
+      </div>
+      <div class="reel-card" style="background: #c8c2b5;">
+        <div class="reel-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4 2l11 7-11 7V2z" fill="#c94a1e"/>
+          </svg>
+        </div>
+      </div>
+      <div class="reel-card" style="background: #b4afa8;">
+        <div class="reel-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4 2l11 7-11 7V2z" fill="#c94a1e"/>
+          </svg>
+        </div>
+      </div>
+      <div class="reel-card" style="background: #a09b94;">
+        <div class="reel-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M4 2l11 7-11 7V2z" fill="#c94a1e"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://instagram.com" target="_blank" class="ig-cta">
+      Follow on Instagram
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </section>
+
+  <!-- ABOUT -->
+  <div id="about" style="display: grid; grid-template-columns: 1fr 1fr;">
+    <div class="about-visual">
+      <div class="about-initial">K</div>
+    </div>
+    <div class="about-text">
+      <p class="section-label">About</p>
+      <h2 class="section-title">Hi, I'm the person behind the needles</h2>
+      <div class="about-body">
+        <p>Knitting Department is where I share the patterns, tutorials, and yarn tangents that come out of my making practice. I started knitting as a way to make things with my hands — and it turns out, making stuff actually does feel damn good.</p>
+        <p>Here you'll find free patterns for all skill levels, video walkthroughs on YouTube, and regular updates on Instagram. Everything is designed to be actually usable — no mysterious abbreviations, no vague instructions.</p>
+        <p>Whether you're picking up needles for the first time or looking for your next project, you're in the right place.</p>
+      </div>
+      <a href="#contact" class="hero-cta" style="align-self: flex-start;">Get in touch →</a>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">Say hello</h2>
+    <div class="contact-grid">
+      <form class="contact-form" onsubmit="return false;">
+        <input type="text" placeholder="Your name" />
+        <input type="email" placeholder="Email address" />
+        <textarea placeholder="Your message"></textarea>
+        <button type="submit" class="contact-submit">Send message</button>
+      </form>
+      <div class="contact-info">
+        <p>Questions about a pattern? Collaboration ideas? Just want to talk yarn? Send a message or find me on social.</p>
+        <div class="contact-links">
+          <a href="https://instagram.com" target="_blank" class="contact-link">
+            <span class="contact-link-dot"></span>
+            @knittingdepartment on Instagram
+          </a>
+          <a href="https://youtube.com" target="_blank" class="contact-link">
+            <span class="contact-link-dot"></span>
+            Knitting Department on YouTube
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">Knitting Department</span>
+    <span class="footer-copy">Make something real. © 2025</span>
+  </footer>
+
+</body>
+</html>
