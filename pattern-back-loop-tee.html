@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Back Loop Tee — Knitting Department</title>
+  <link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700&family=DM+Sans:wght@100;300;400;500;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #001138;
+      --white: #F8F2E0;
+      --cream: #edeade;
+      --yarn: #EF4367;
+      --yarn-dark: #c82d50;
+      --yarn-light: #f9b3c0;
+      --ink: #001138;
+      --muted: #327F88;
+      --border: #c8c4b8;
+      --yellow: #FEC018;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: var(--white);
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-back {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--yarn); }
+
+    /* HERO */
+    .pattern-hero {
+      padding-top: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 500px;
+    }
+
+    .pattern-hero-left {
+      padding: 4rem 3rem 4rem 6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .tag-pill {
+      display: inline-flex;
+      padding: 0.3rem 0.9rem;
+      border-radius: 2rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-right: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag-difficulty { background: var(--yellow); color: var(--ink); }
+    .tag-free { background: var(--cream); color: var(--muted); border: 1px solid var(--border); }
+
+    .pattern-title {
+      font-family: 'Shrikhand', serif;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      color: var(--ink);
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .pattern-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+
+    .pattern-description {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #4a5568;
+      font-weight: 300;
+      max-width: 420px;
+    }
+
+    .pattern-hero-right {
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pattern-hero-right img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .pattern-hero-placeholder {
+      width: 100%; height: 100%;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--border);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* STATS */
+    .pattern-stats {
+      background: var(--ink);
+      padding: 2rem 6rem;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2rem;
+    }
+
+    .stat { display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .stat-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    /* SIZES */
+    .sizes-section {
+      background: var(--cream);
+      padding: 3rem 6rem;
+    }
+
+    .sizes-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    .sizes-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .sizes-table th {
+      text-align: left;
+      padding: 0.6rem 1rem;
+      background: var(--ink);
+      color: var(--white);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .sizes-table td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink);
+    }
+
+    .sizes-table tr:nth-child(even) td { background: rgba(0,0,0,0.03); }
+
+    .sizes-note {
+      margin-top: 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* MAIN CONTENT */
+    .pattern-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 6rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 2.5rem 0 1.5rem;
+      padding-top: 2.5rem;
+      border-top: 2px solid var(--yarn);
+    }
+
+    .section-heading:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      align-items: start;
+    }
+
+    .step-number {
+      width: 48px; height: 48px;
+      background: var(--yarn);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Shrikhand', serif;
+      font-size: 1.1rem;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .step-text {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: #4a5568;
+      font-weight: 300;
+    }
+
+    .step-text p + p { margin-top: 0.75rem; }
+
+    .step-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 0 2rem 63px;
+    }
+
+    .pattern-note {
+      background: var(--yarn-light);
+      border-left: 3px solid var(--yarn);
+      padding: 1rem 1.25rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--ink);
+      margin: 1rem 0 1.5rem 63px;
+    }
+
+    /* SIDEBAR */
+    .pattern-sidebar { position: sticky; top: 100px; }
+
+    .sidebar-card {
+      background: var(--cream);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 0.5rem 0;
+      font-size: 0.88rem;
+      border-bottom: 1px solid var(--border);
+      gap: 1rem;
+    }
+
+    .sidebar-row:last-child { border-bottom: none; }
+    .sidebar-row-label { color: var(--muted); font-weight: 400; flex-shrink: 0; }
+    .sidebar-row-value { color: var(--ink); font-weight: 500; text-align: right; }
+
+    .sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .sidebar-list li {
+      font-size: 0.88rem;
+      color: var(--ink);
+      font-weight: 300;
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .sidebar-list li::before {
+      content: '❤︎';
+      position: absolute;
+      left: 0;
+      font-size: 0.6rem;
+      color: var(--yarn);
+      top: 3px;
+    }
+
+    /* BACK */
+    .back-section {
+      background: var(--ink);
+      padding: 4rem 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .back-section p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      background: var(--yarn);
+      color: var(--white);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 2rem;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover { background: var(--yellow); color: var(--ink); }
+
+    footer {
+      background: var(--black);
+      border-top: 1px solid #1a1814;
+      padding: 2rem 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .footer-copy {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: #4a4742;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .pattern-hero { grid-template-columns: 1fr; }
+      .pattern-hero-left { padding: 3rem 2rem; }
+      .pattern-hero-right { min-height: 300px; }
+      .pattern-stats { grid-template-columns: repeat(2, 1fr); padding: 2rem; }
+      .sizes-section { padding: 2.5rem 2rem; }
+      .pattern-content { grid-template-columns: 1fr; padding: 3rem 2rem; gap: 3rem; }
+      .back-section { padding: 3rem 2rem; flex-direction: column; gap: 1.5rem; text-align: center; }
+      footer { padding: 1.5rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-back">← All patterns</a>
+    <a href="index.html" class="nav-logo">Knitting Department</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="pattern-hero">
+    <div class="pattern-hero-left">
+      <div>
+        <span class="tag-pill tag-difficulty">Beginner friendly</span>
+        <span class="tag-pill tag-free">Free pattern</span>
+      </div>
+      <h1 class="pattern-title">Back Loop Tee</h1>
+      <p class="pattern-subtitle">Oversized &amp; Cropped</p>
+      <p class="pattern-description">A crochet t-shirt with super simple construction — made from 4 rectangles sewn together, finished with a neat ribbed neckline. Easy to adjust and customize to suit your preferences.</p>
+    </div>
+    <div class="pattern-hero-right">
+      <div class="pattern-hero-placeholder">Add your photo here</div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="pattern-stats">
+    <div class="stat">
+      <span class="stat-label">Skill level</span>
+      <span class="stat-value">Easy / Beginner</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Hook size</span>
+      <span class="stat-value">5 mm</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Gauge</span>
+      <span class="stat-value">13 sts × 6 rows / 10 cm in DC</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Yardage</span>
+      <span class="stat-value">660 – 1025 m</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Ease</span>
+      <span class="stat-value">30 – 35 cm positive</span>
+    </div>
+  </div>
+
+  <!-- SIZES TABLE -->
+  <div class="sizes-section">
+    <h2 class="sizes-title">Sizes &amp; Measurements</h2>
+    <table class="sizes-table">
+      <thead>
+        <tr>
+          <th>Measurement</th>
+          <th>Size 1</th>
+          <th>Size 2</th>
+          <th>Size 3</th>
+          <th>Size 4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Bust</td><td>114 cm</td><td>126 cm</td><td>138 cm</td><td>150 cm</td></tr>
+        <tr><td>Flat width</td><td>57 cm</td><td>63 cm</td><td>69 cm</td><td>75 cm</td></tr>
+        <tr><td>Length</td><td>40 cm</td><td>42 cm</td><td>44 cm</td><td>46 cm</td></tr>
+        <tr><td>Sleeve width</td><td>19 cm</td><td>21 cm</td><td>23 cm</td><td>25 cm</td></tr>
+        <tr><td>Sleeve length</td><td>14 cm</td><td>15 cm</td><td>16 cm</td><td>17 cm</td></tr>
+        <tr><td>Yarn (m)</td><td>660 m</td><td>780 m</td><td>900 m</td><td>1025 m</td></tr>
+        <tr><td>Yarn (g)</td><td>300 g</td><td>355 g</td><td>410 g</td><td>465 g</td></tr>
+      </tbody>
+    </table>
+    <p class="sizes-note">All photos show the smallest size, on a person 164 cm tall. The tee is designed to be worn with approx. 30–35 cm of positive ease.</p>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="pattern-content">
+    <div class="pattern-steps">
+
+      <!-- BODY -->
+      <h2 class="section-heading">Body</h2>
+
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-body">
+          <p class="step-title">Foundation chain</p>
+          <p class="step-text">Using a 5 mm crochet hook, make a foundation chain of 75 (83, 91, 99) stitches.</p>
+        </div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-body">
+          <p class="step-title">Row 1</p>
+          <p class="step-text">Ch 3 (counts as first DC). DC in the 5th chain from the hook, then DC in each remaining chain across. You should have 75 (83, 91, 99) DC in total. Turn your work.</p>
+        </div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-body">
+          <p class="step-title">Row 2 (repeat)</p>
+          <p class="step-text">Ch 3 (counts as first DC). DC blo in the 2nd stitch of the previous row and in each remaining stitch. You should still have 75 (83, 91, 99) DC in total.</p>
+          <p class="step-text">Repeat Row 2 until you have worked 24 (25, 27, 28) rows in total. Do not fasten off.</p>
+        </div>
+      </div>
+      <div class="pattern-note">💡 If you find it difficult to identify the first and last stitch of the row, place a stitch marker in the turning chain. This will help you keep the correct stitch count on every row.</div>
+      <div class="step-divider"></div>
+
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-body">
+          <p class="step-title">Last row — neckline shaping</p>
+          <p class="step-text">All sizes have 25 stitches for the neck opening.</p>
+          <p class="step-text">Work 25 (29, 33, 37) DC blo, including the turning chain. Fasten off and secure the stitch by pulling the loop through.</p>
+          <p class="step-text">Skip 25 stitches for the neck opening, and attach the yarn to the next stitch. Ch 3 (counts as first DC), then work 24 (28, 32, 36) DC blo. Fasten off and secure.</p>
+          <p class="step-text">Once the first panel is complete, make a second panel in the same way.</p>
+        </div>
+      </div>
+
+      <!-- SLEEVES -->
+      <h2 class="section-heading">Sleeves</h2>
+
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-body">
+          <p class="step-title">Foundation chain</p>
+          <p class="step-text">Make a foundation chain of 25 (28, 30, 33) stitches.</p>
+        </div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-body">
+          <p class="step-title">Row 1</p>
+          <p class="step-text">Ch 3 (counts as first DC). DC in the 5th chain from the hook, then DC in each remaining chain. You should have 25 (28, 30, 33) DC. Turn your work.</p>
+        </div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-body">
+          <p class="step-title">Row 2 (repeat)</p>
+          <p class="step-text">Ch 3 (counts as first DC). DC blo in the 2nd stitch of the previous row and in each remaining stitch. You should still have 25 (28, 30, 33) DC. Turn your work.</p>
+          <p class="step-text">Repeat Row 2 until you have worked 9 (9, 10, 11) rows in total. Fasten off and secure. Make a second sleeve in the same way.</p>
+        </div>
+      </div>
+
+      <!-- SEWING -->
+      <h2 class="section-heading">Sewing everything together</h2>
+
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-body">
+          <p class="step-title">Sew the sleeves into tubes</p>
+          <p class="step-text">Double-check the right side and wrong side of each sleeve. Place both sleeves wrong side facing up. Fold each sleeve in half lengthwise and sew the side edges together to create a tube, sewing with wrong sides facing so the seam is hidden inside. Use safety pins to secure the edges before sewing.</p>
+        </div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-body">
+          <p class="step-title">Join the body panels at the shoulders</p>
+          <p class="step-text">Place both body panels wrong side facing up. Align the top edges and sew the shoulders together, leaving the neckline opening unsewn. Sew with wrong sides facing so the seam is hidden when turned right side out.</p>
+        </div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-body">
+          <p class="step-title">Attach sleeves and sew side seams</p>
+          <p class="step-text">With the main body on the wrong side, take the sleeves (now tubes) with the seam at the bottom. Align one open edge of a sleeve with the side edge of the body panel and secure with safety pins. Align the side edges of the body panels, making sure hem edges are even.</p>
+          <p class="step-text">Begin sewing at the bottom hem, sew up the side seam, continue around one side of the sleeve up to the shoulder, then sew back down attaching the other side of the sleeve to the body. Repeat for the second sleeve.</p>
+        </div>
+      </div>
+
+      <!-- NECKLINE -->
+      <h2 class="section-heading">Neckline</h2>
+
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-body">
+          <p class="step-title">Single crochet round</p>
+          <p class="step-text">With the right side facing, attach yarn to the edge of the neckline opening. Ch 2 (counts as the first SC). Work 1 SC around the entire neckline, placing 25 SC along each side and 3 SC in each corner. You should have 56 stitches in total. Join the round with a slip stitch to the first SC.</p>
+        </div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-body">
+          <p class="step-title">Ribbed edge — Row 1</p>
+          <p class="step-text">Chain 5 (counts as 4 sts + 1 turning chain). SC in 2nd chain from the hook, then SC in next two stitches. Slip stitch through the next (last) chain and next stitch of the neckline together. Sl st into the following neckline stitch.</p>
+        </div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-body">
+          <p class="step-title">Ribbed edge — Row 2</p>
+          <p class="step-text">Turn. There are 5 stitches — skip the first one. Working in back loops only, SC in each of the 4 ribbing stitches. Chain 1.</p>
+        </div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-body">
+          <p class="step-title">Ribbed edge — Row 3 (repeat)</p>
+          <p class="step-text">Turn. Skip the first stitch. SC (back loop only) in the next 3 stitches. Slip stitch together the next (last) stitch and next stitch of the neckline. Sl st into the following neckline stitch.</p>
+          <p class="step-text">Repeat Rows 2 and 3 all the way around the neckline. When done, connect the first and last row with a slip stitch.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 3rem; padding: 2rem; background: var(--yarn); border-radius: 1rem; text-align: center;">
+        <p style="font-family: 'Shrikhand', serif; font-size: 1.8rem; color: var(--white); letter-spacing: 0.05em;">Congratulations, you made it! 🧶</p>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="pattern-sidebar">
+
+      <div class="sidebar-card">
+        <p class="sidebar-card-title">Pattern details</p>
+        <div class="sidebar-row">
+          <span class="sidebar-row-label">Type</span>
+          <span class="sidebar-row-value">Crochet</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-row-label">Skill level</span>
+          <span class="sidebar-row-value">Easy / Beginner</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-row-label">Hook size</span>
+          <span class="sidebar-row-value">5 mm</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-row-label">Gauge</span>
+          <span class="sidebar-row-value">13 sts × 6 rows / 10 cm in DC</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-row-label">Ease</span>
+          <span class="sidebar-row-value">30–35 cm positive</span>
+        </div>
+        <div class="sidebar-row">
+          <span class="sidebar-row-label">Terminology</span>
+          <span class="sidebar-row-value">US</span>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <p class="sidebar-card-title">Materials</p>
+        <ul class="sidebar-list">
+          <li>5 mm crochet hook</li>
+          <li>660–1025 m / 300–465 g Festival Yarn by Alison &amp; Mae (or similar worsted weight)</li>
+          <li>Safety pins</li>
+          <li>Darning needle</li>
+          <li>Stitch marker (optional)</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-card">
+        <p class="sidebar-card-title">Abbreviations (US)</p>
+        <ul class="sidebar-list">
+          <li>DC — Double crochet</li>
+          <li>SC — Single crochet</li>
+          <li>BLO — Back loop only</li>
+          <li>Ch — Chain</li>
+          <li>Sl st — Slip stitch</li>
+          <li>St(s) — Stitch(es)</li>
+        </ul>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- BACK -->
+  <div class="back-section">
+    <p>Want to see more patterns?</p>
+    <a href="index.html#patterns" class="back-btn">← Back to all patterns</a>
+  </div>
+
+  <footer>
+    <span class="footer-logo">Knitting Department</span>
+    <span class="footer-copy">Make something real. © 2025</span>
+  </footer>
+
+</body>
+</html>
