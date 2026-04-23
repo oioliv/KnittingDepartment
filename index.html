@@ -251,7 +251,7 @@
       font-weight: 700;
       line-height: 1.15;
       color: var(--ink);
-      margin-bottom: 1rem;
+      margin-bottom: 0;
       letter-spacing: -0.02em;
     }
 
@@ -530,9 +530,9 @@
     .about-body p + p { margin-top: 1rem; }
 
     /* CONTACT */
-    #contact { background: var(--black); padding: 5rem 120px; }
-    #contact .section-title { color: var(--white); }
-    #contact .section-label { color: var(--yarn); }
+    #contact { background: var(--yellow); padding: 5rem 120px; }
+    #contact .section-title { color: var(--ink); }
+    #contact .section-label { color: var(--ink); opacity: 0.6; }
 
     .contact-grid {
       display: grid;
@@ -549,9 +549,9 @@
 
     .contact-form input,
     .contact-form textarea {
-      background: #1a1814;
-      border: 1px solid #2a2724;
-      color: var(--white);
+      background: var(--white);
+      border: 1px solid var(--border);
+      color: var(--ink);
       padding: 0.9rem 1.2rem;
       font-family: 'DM Sans', sans-serif;
       font-size: 0.9rem;
@@ -561,7 +561,7 @@
     }
 
     .contact-form input::placeholder,
-    .contact-form textarea::placeholder { color: #4a4742; }
+    .contact-form textarea::placeholder { color: var(--muted); }
 
     .contact-form input:focus,
     .contact-form textarea:focus { border-color: var(--yellow); }
@@ -569,23 +569,24 @@
     .contact-form textarea { height: 130px; }
 
     .contact-submit {
-      padding: 0.9rem 2rem;
+      padding: 1rem 2.2rem;
       background: var(--yarn);
       color: var(--white);
       border: none;
+      border-radius: 2rem;
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      font-weight: 500;
+      font-weight: 700;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.15s;
       align-self: flex-start;
     }
 
-    .contact-submit:hover { background: var(--yellow); color: var(--ink); }
+    .contact-submit:hover { background: var(--yarn-dark); transform: translateY(-2px); }
 
-    .contact-info { color: #7a7570; }
+    .contact-info { color: var(--ink); }
 
     .contact-info p {
       font-size: 0.9rem;
@@ -603,7 +604,7 @@
       font-family: 'Playfair Display', serif;
       font-size: 0.78rem;
       letter-spacing: 0.05em;
-      color: #9a9590;
+      color: var(--ink);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -722,10 +723,9 @@
   <!-- PATTERNS -->
   <section id="patterns">
     <p class="section-label">Patterns</p>
-    <h2 class="section-title">Latest from the desk</h2>
-    <p class="section-subtitle">Step-by-step patterns for all skill levels. Free to download, designed to actually work.</p>
+    <h2 class="section-title">Latest on my desk</h2>
 
-    <div class="patterns-grid">
+    <div class="patterns-grid" style="margin-top: 50px;">
       <!-- Pattern 1 -->
       <div class="pattern-card" style="background-image: url('https://raw.githubusercontent.com/oioliv/KnittingDepartment/refs/heads/main/images/BackLoopTee_01.jpg'); background-size: 120%; background-position: center 30%;">
         <div class="pattern-info">
@@ -765,51 +765,7 @@
           <a href="#" class="pattern-read">Read more →</a>
         </div>
       </div>
-      <!-- Pattern 4 -->
-      <div class="pattern-card" style="background: #ede9e0;">
-        <div class="pattern-placeholder">
-          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
-            <circle cx="60" cy="60" r="35" stroke="#b4afa8" stroke-width="2.5" fill="none"/>
-            <path d="M35 60 Q50 40 60 60 Q70 80 85 60" stroke="#c94a1e" stroke-width="3" fill="none" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="pattern-info">
-          <span class="pattern-tag">Advanced</span>
-          <p class="pattern-name">Lace Shawl<br>No. 3</p>
-          <a href="#" class="pattern-read">Read more →</a>
-        </div>
-      </div>
-      <!-- Pattern 5 -->
-      <div class="pattern-card" style="background: #c94a1e;">
-        <div class="pattern-placeholder">
-          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
-            <path d="M40 30 L40 90 M80 30 L80 90" stroke="rgba(255,255,255,0.3)" stroke-width="3" stroke-linecap="round"/>
-            <path d="M40 45 Q60 35 80 45" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" fill="none"/>
-            <path d="M40 60 Q60 50 80 60" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" fill="none"/>
-            <path d="M40 75 Q60 65 80 75" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" fill="none"/>
-          </svg>
-        </div>
-        <div class="pattern-info">
-          <span class="pattern-tag">Beginner · Free</span>
-          <p class="pattern-name">Simple Garter<br>Scarf</p>
-          <a href="#" class="pattern-read">Read more →</a>
-        </div>
-      </div>
-      <!-- Pattern 6 -->
-      <div class="pattern-card" style="background: #2a3520;">
-        <div class="pattern-placeholder">
-          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
-            <path d="M30 80 Q60 25 90 80" fill="#3a4a2d"/>
-            <path d="M40 80 Q60 35 80 80" fill="#4a5e3a"/>
-            <circle cx="60" cy="85" r="8" fill="#c94a1e"/>
-          </svg>
-        </div>
-        <div class="pattern-info">
-          <span class="pattern-tag">Intermediate</span>
-          <p class="pattern-name">Forest Mittens<br>with thumb gusset</p>
-          <a href="#" class="pattern-read">Read more →</a>
-        </div>
-      </div>
+
     </div>
   </section>
 
@@ -817,9 +773,8 @@
   <section id="videos">
     <p class="section-label">YouTube</p>
     <h2 class="section-title">Watch & learn</h2>
-    <p class="section-subtitle">Video tutorials to go alongside the patterns — because some things you just need to see.</p>
 
-    <div class="videos-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="videos-grid" style="grid-template-columns: repeat(2, 1fr); margin-top: 50px;">
       <a href="https://youtu.be/cNzhXgQMCzI?si=WOObBWLKH86sq5kz" target="_blank" class="video-card" style="text-decoration: none;">
         <div class="video-thumb">
           <img src="https://img.youtube.com/vi/cNzhXgQMCzI/maxresdefault.jpg" alt="The Simplest Summer Bag tutorial" style="width:100%;height:100%;object-fit:cover;display:block;" />
@@ -847,7 +802,7 @@
     </div>
 
     <div style="margin-top: 2.5rem;">
-      <a href="https://www.youtube.com/@KnittingDepartment" target="_blank" class="ig-cta" style="border-color: #2a2724; color: #9a9590;">
+      <a href="https://www.youtube.com/@KnittingDepartment" target="_blank" class="ig-cta" style="background: var(--yellow); color: var(--ink); border-color: var(--yellow); border-radius: 2rem; font-weight: 700;">
         Watch all on YouTube
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -858,9 +813,8 @@
   <section id="instagram">
     <p class="section-label">Instagram</p>
     <h2 class="section-title">Reels & work in progress</h2>
-    <p class="section-subtitle">Behind the scenes, quick tips, and things I'm currently making.</p>
 
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; align-items: start;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; align-items: start; margin-top: 50px;">
       <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DXCd9Qfggzq/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:12px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:0; padding:0; width:100%;"></blockquote>
       <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DXE11_KgtJl/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:12px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:0; padding:0; width:100%;"></blockquote>
       <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DW9mkelDU_0/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:12px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:0; padding:0; width:100%;"></blockquote>
@@ -868,7 +822,7 @@
     </div>
     <script async src="//www.instagram.com/embed.js"></script>
 
-    <a href="https://www.instagram.com/knitting.department/" target="_blank" class="ig-cta" style="margin-top: 2rem;">
+    <a href="https://www.instagram.com/knitting.department/" target="_blank" class="ig-cta" style="margin-top: 2rem; background: var(--yellow); color: var(--ink); border-color: var(--yellow); border-radius: 2rem; font-weight: 700;">
       Follow on Instagram
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
@@ -878,7 +832,7 @@
   <section id="about" style="background: var(--cream); padding: 6rem 120px;">
     <p class="section-label">About</p>
     <h2 class="section-title" style="text-align: left;">About me</h2>
-    <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; margin-top: 2.5rem;">
+    <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; margin-top: 50px;">
       <!-- Photo -->
       <div>
         <div style="border-radius: 1.5rem; overflow: hidden; aspect-ratio: 1/1; background: var(--border); max-width: 100%;">
@@ -942,12 +896,12 @@
   <!-- CONTACT -->
   <section id="contact">
     <p class="section-label">Contact</p>
-    <h2 class="section-title">Say hello</h2>
-    <div class="contact-grid">
-      <form class="contact-form" onsubmit="return false;">
-        <input type="text" placeholder="Your name" />
-        <input type="email" placeholder="Email address" />
-        <textarea placeholder="Your message"></textarea>
+    <h2 class="section-title">Say hello!</h2>
+    <div class="contact-grid" style="margin-top: 60px;">
+      <form class="contact-form" action="https://formspree.io/f/mwvawprb" method="POST">
+        <input type="text" name="name" placeholder="Your name" />
+        <input type="email" name="email" placeholder="Email address" />
+        <textarea name="message" placeholder="Your message"></textarea>
         <button type="submit" class="contact-submit">Send message</button>
       </form>
       <div class="contact-info">
